@@ -1,0 +1,112 @@
+/* 设计令牌：白蓝基调 + 浅色玻璃，换深色只需换这一组值 */
+:root {
+  --desk-a: #f2f6ff; --desk-b: #dbe5fa;
+  --win-bg: rgba(255,255,255,.74);
+  --glass-1: rgba(255,255,255,.55);
+  --glass-2: rgba(255,255,255,.74);
+  --glass-3: rgba(255,255,255,.90);
+  --line: rgba(23,44,94,.10);
+  --line-2: rgba(23,44,94,.16);
+  --ink: #0f1b33; --ink-2: #4c5a78; --ink-3: #8b95ab;
+  --voice: #4d6bfe; --voice-2: #6d87ff;
+  --voice-dim: rgba(77,107,254,.09);
+  --voice-line: rgba(77,107,254,.30);
+  --warm: #e08a3c; --cool: #3f8fd0;
+  --hi: inset 0 1px 0 rgba(255,255,255,.95);
+  --shadow-win: 0 40px 90px -36px rgba(28,48,110,.34), 0 0 0 1px rgba(28,48,110,.06);
+  --shadow-card: 0 18px 44px -26px rgba(28,48,110,.30);
+  --r-win: 14px; --r-card: 12px; --r-ctl: 9px;
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; padding: 18px;
+  background:
+    radial-gradient(1100px 700px at 6% -16%, rgba(77,107,254,.20), transparent 58%),
+    radial-gradient(860px 580px at 98% 112%, rgba(140,120,255,.16), transparent 60%),
+    radial-gradient(700px 500px at 70% 40%, rgba(120,190,255,.10), transparent 65%),
+    linear-gradient(165deg, var(--desk-a), var(--desk-b));
+  font: 13.5px/1.6 -apple-system, "Segoe UI Variable", "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .018;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+}
+
+/* 窗口 */
+.window {
+  width: 1150px; height: 668px; margin: 0 auto; position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: var(--r-win);
+  background: var(--win-bg);
+  -webkit-backdrop-filter: blur(40px) saturate(1.5);
+  backdrop-filter: blur(40px) saturate(1.5);
+  border: 1px solid var(--line-2);
+  box-shadow: var(--shadow-win), inset 0 1px 0 rgba(255,255,255,.95);
+}
+/* 窗口内部也要有光：外面的背景被 blur 糊平了，透不进来 */
+.window::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(760px 420px at 10% -12%, rgba(77,107,254,.13), transparent 62%),
+    radial-gradient(640px 400px at 94% 110%, rgba(140,120,255,.11), transparent 64%),
+    radial-gradient(520px 320px at 62% 46%, rgba(120,190,255,.07), transparent 70%);
+}
+.titlebar, .body { position: relative; z-index: 1; }
+
+/* 标题栏 */
+.titlebar {
+  height: 44px; flex: none; display: flex; align-items: center; gap: 14px;
+  padding: 0 8px 0 14px; border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; letter-spacing: .2px; }
+.mark {
+  width: 21px; height: 21px; border-radius: 6px; display: grid; place-items: center;
+  font-size: 11.5px; font-weight: 700; color: #fff;
+  background: linear-gradient(160deg, var(--voice-2), var(--voice));
+  box-shadow: 0 3px 10px -3px rgba(77,107,254,.55);
+}
+.tabs { display: flex; gap: 6px; margin-left: 10px; }
+.tab {
+  display: inline-flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px;
+  border-radius: 7px; font-size: 12px; color: var(--ink-2);
+  background: var(--glass-2); border: 1px solid var(--line); box-shadow: var(--hi);
+}
+.tab.on { color: var(--ink); border-color: var(--voice-line); background: var(--voice-dim); }
+.tab i { font-style: normal; color: var(--ink-3); font-size: 11px; }
+.spacer { flex: 1; }
+.winbtns { display: flex; gap: 2px; }
+.winbtns i {
+  width: 32px; height: 26px; display: grid; place-items: center; font-style: normal;
+  font-size: 11px; color: var(--ink-2); border-radius: 6px;
+}
+
+/* 主体：左侧纵向轨道 + 主区 */
+.body { flex: 1; display: flex; min-height: 0; }
+.rail {
+  width: 68px; flex: none; display: flex; flex-direction: column; align-items: center;
+  gap: 10px; padding: 14px 0 12px; border-right: 1px solid var(--line);
+}
+.av {
+  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 13px; font-weight: 600; color: #46557c; position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,.95), rgba(238,244,255,.85));
+  border: 1px solid var(--line); box-shadow: var(--hi);
+}
+.av.on {
+  color: #fff; border-color: transparent;
+  background: linear-gradient(160deg, var(--voice-2), var(--voice));
+  box-shadow: 0 0 0 3px rgba(77,107,254,.14), 0 8px 20px -10px rgba(77,107,254,.65);
+}
+.av.new::after {
+  content: ""; position: absolute; right: -1px; top: -1px; width: 9px; height: 9px;
+  border-radius: 50%; background: var(--warm); border: 2px solid #fff;
+}
+.rail .sep { width: 22px; height: 1px; background: var(--line); margin: 4px 0; }
+.rail-foot { margin-top: auto; color: var(--ink-3); font-size: 15px; }
+
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }

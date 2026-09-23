@@ -1,0 +1,16 @@
+{
+  "_说明": "美元/百万 token，2026-09-15 抓自 api-docs.deepseek.com 官方价目表。高峰价是平价的两倍。",
+  "_高峰时段": "UTC 周一至周五 01:00-04:00 与 06:00-10:00，折成北京时间是工作日 09:00-12:00 和 14:00-18:00；其余时间都是平价",
+  "models": {
+    "deepseek-flash": {
+      "cache_hit": { "off": 0.003, "peak": 0.006 },
+      "cache_miss": { "off": 0.15, "peak": 0.30 },
+      "output": { "off": 0.6, "peak": 1.2 }
+    },
+    "deepseek-v4-pro": {
+      "cache_hit": { "off": 0.022, "peak": 0.044 },
+      "cache_miss": { "off": 0.66, "peak": 1.32 },
+      "output": { "off": 1.98, "peak": 3.96 }
+    }
+  }
+}

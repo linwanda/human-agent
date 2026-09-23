@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>窗口外观对比</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  body { padding: 26px 26px 30px; }
+  .wrap { width: 1116px; margin: 0 auto; }
+  h1 { margin: 0 0 6px; font-size: 17px; font-weight: 600; letter-spacing: .2px; }
+  .sub { margin: 0 0 22px; font-size: 12.5px; color: var(--ink-3); }
+  .row { display: flex; gap: 24px; }
+  .case { flex: 1; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 10px;
+    font-size: 12.5px; color: var(--ink-2);
+  }
+  .tag i {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--voice); font-style: normal;
+  }
+  .tag.gray i { background: #b3bac5; }
+
+  /* 窗口外壳 */
+  .win {
+    border-radius: 10px; overflow: hidden; background: #fff;
+    border: 1px solid rgba(23,44,94,.18);
+    box-shadow: 0 20px 44px -22px rgba(28,48,110,.34);
+  }
+  .win.frameless { border-color: rgba(23,44,94,.14); }
+
+  /* 系统标题栏（Windows 画的） */
+  .sysbar {
+    height: 32px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4px 0 12px; background: #f0f0f0; color: #2b2f36;
+    font-size: 12px; border-bottom: 1px solid #e2e2e2;
+  }
+  .sysbar .btns { display: flex; }
+  .sysbar .btns i {
+    width: 42px; height: 30px; display: grid; place-items: center;
+    font-style: normal; font-size: 11px; color: #444;
+  }
+  .sysbar .btns i.x:hover { background: #e81123; color: #fff; }
+
+  /* 应用自己的头部 */
+  .appbar {
+    height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 10px 0 14px;
+    background: linear-gradient(120deg, rgba(232,239,253,.96), rgba(238,243,253,.92));
+    border-bottom: 1px solid rgba(23,44,94,.08);
+  }
+  .appbar .brand { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; }
+  .appbar .mark {
+    width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center;
+    font-size: 11px; font-weight: 700; color: #fff;
+    background: linear-gradient(160deg, var(--voice-2), var(--voice));
+  }
+  .modes { display: flex; gap: 2px; padding: 3px; border-radius: 9px; background: rgba(23,44,94,.06); }
+  .modes span { padding: 3px 13px; border-radius: 7px; font-size: 12px; color: var(--ink-3); }
+  .modes span.on { background: #fff; color: var(--voice); font-weight: 600; box-shadow: 0 1px 3px rgba(28,48,110,.16); }
+  .appbar .sp { flex: 1; }
+  .appbar .meter { font-size: 11.5px; color: var(--ink-3); }
+  .appbar .wbtn { display: flex; gap: 2px; }
+  .appbar .wbtn i {
+    width: 32px; height: 26px; border-radius: 7px; display: grid; place-items: center;
+    font-style: normal; font-size: 11px; color: var(--ink-2);
+  }
+  .appbar .wbtn i.x:hover { background: #e5484d; color: #fff; }
+
+  /* 内容缩略 */
+  .body { display: flex; height: 210px; background: #fbfcff; }
+  .rail {
+    width: 56px; display: flex; flex-direction: column; align-items: center; gap: 7px;
+    padding: 12px 0; border-right: 1px solid rgba(23,44,94,.06); background: rgba(246,249,255,.9);
+  }
+  .av {
+    width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 11px; font-weight: 600; color: #46557c; background: #fff;
+    border: 1px solid rgba(23,44,94,.10);
+  }
+  .av.on {
+    color: #fff; border-color: transparent;
+    background: linear-gradient(160deg, var(--voice-2), var(--voice));
+  }
+  .main { flex: 1; padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .line { height: 11px; border-radius: 6px; background: rgba(23,44,94,.07); }
+  .line.s { width: 42%; }
+  .line.m { width: 66%; }
+  .bub {
+    align-self: flex-start; padding: 9px 13px; border-radius: 12px; font-size: 12px;
+    background: #fff; border: 1px solid rgba(23,44,94,.10); color: var(--ink-2);
+  }
+  .bub.me {
+    align-self: flex-end; color: #17234d;
+    background: linear-gradient(150deg, rgba(77,107,254,.16), rgba(77,107,254,.08));
+    border-color: rgba(77,107,254,.30);
+  }
+  .note { margin-top: 16px; font-size: 12px; color: var(--ink-3); }
+  .note b { color: var(--ink-2); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>两种窗口外观</h1>
+  <p class="sub">左边是现在这样（系统标题栏 + 应用头部），右边是没有系统标题栏的样子。</p>
+  <div class="row">
+    <div class="case">
+      <div class="tag gray"><i></i>现在这样</div>
+      <div class="win">
+        <div class="sysbar">
+          <span>晚风 Agent</span>
+          <span class="btns"><i>—</i><i>▢</i><i class="x">✕</i></span>
+        </div>
+        <div class="appbar">
+          <div class="modes"><span class="on">晚风</span><span>早安</span></div>
+          <div class="sp"></div>
+          <span class="meter">5,873 次调用 · 约 $2.76</span>
+        </div>
+        <div class="body">
+          <div class="rail"><span class="av on">宝</span><span class="av">谢</span><span class="av">c</span><span class="av">空</span></div>
+          <div class="main">
+            <div class="bub">周末有空吗？一起去打球</div>
+            <div class="bub me">周六下午可以，你定场地？</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">顶上是 <b>Windows 自己画的</b>白条，下面又接一条应用头部，所以看着像两层。</p>
+    </div>
+
+    <div class="case">
+      <div class="tag"><i></i>无边框这样</div>
+      <div class="win frameless">
+        <div class="appbar">
+          <div class="brand"><span class="mark">晚</span>晚风 Agent</div>
+          <div class="modes"><span class="on">晚风</span><span>早安</span></div>
+          <div class="sp"></div>
+          <span class="meter">5,873 次调用</span>
+          <span class="wbtn"><i>—</i><i>▢</i><i class="x">✕</i></span>
+        </div>
+        <div class="body">
+          <div class="rail"><span class="av on">宝</span><span class="av">谢</span><span class="av">c</span><span class="av">空</span></div>
+          <div class="main">
+            <div class="bub">周末有空吗？一起去打球</div>
+            <div class="bub me">周六下午可以，你定场地？</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">只剩一条：品牌、模式切换、窗口按钮<b>都在应用自己这一条上</b>。</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
